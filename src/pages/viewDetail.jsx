@@ -18,8 +18,6 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    // border: '2px solid #000',
-    // boxShadow: 24,
     p: 4,
 
 };
@@ -38,9 +36,10 @@ function ViewDetail({ sortOrder,
     })
     const [open, setOpen] = useState(false);
     const [SingleUserData, setSingleUserData] = useState({})
-    // console.log(SingleUserData)
+
+    // ------------------------------------------------------------model--------------------------------------------
+
     const handleOpen = async (id) => {
-        // console.log(id)
         await axios.get("https://dummyjson.com/users/" + id)
             .then((res) => { setSingleUserData(res.data), setOpen(true) })
             .catch((err) => { console.log("error---", err) })
@@ -50,12 +49,10 @@ function ViewDetail({ sortOrder,
     const handleClose = () => setOpen(false);
     const [singleItem, setSingleItem] = useState()
     const selector = useSelector((state) => state.viewDetail_Reducer.data.users)
-    // console.log(selector)
 
     // ------------------------------------------------------------filter emp--------------------------------------------
     const FilterUser = async (e) => {
         e.preventDefault();
-        // console.log("filter_field++++++++++++",filter.selectfield,"----------filter_value------",filter.value)
         await axios.get(`https://dummyjson.com/users/filter?key=${filter.selectfield}&value=${filter.value}`)
             .then((res) => {
                 console.log("response-", res.data)
@@ -68,10 +65,8 @@ function ViewDetail({ sortOrder,
     // ------------------------------------------------------------search emp--------------------------------------------
     const SearchEmp = async (e) => {
         e.preventDefault()
-        // console.log("search", search)
         await axios.get('http://dummyjson.com/users/search?q=' + search)
             .then((res) => {
-                // console.log(res.data)
                 dispatch(viewDetail_Action(res.data))
             })
             .catch((err) => {
@@ -83,7 +78,6 @@ function ViewDetail({ sortOrder,
 
         await axios.get("https://dummyjson.com/users")
             .then((res) => {
-                // console.log(res.data)
                 dispatch(viewDetail_Action(res.data))
             })
             .catch((err) => {
@@ -261,9 +255,9 @@ function ViewDetail({ sortOrder,
                             Email:-<div className='font-serif bg-purple-200 my-1 p-1 pl-3'>{SingleUserData.email}</div>
                             Phone:-<div className=' bg-purple-200 my-1 p-1 pl-3'>{SingleUserData.phone}</div>
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            {/* Duis mollis, est non commodo luctus, nisi erat porttitor ligula. */}
-                        </Typography>
+                        {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </Typography> */}
                     </Box>
                 </Modal>
 
